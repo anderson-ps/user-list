@@ -9,24 +9,34 @@ import { User } from '../models/user';
 export class UserService {
 
   apiUrl = 'https://sheet.best/api/sheets/57b50cae-c579-407f-80fe-81b86f3b3017';
+ 
   httpOptions = {
     headers: new HttpHeaders({
-      'content-Type': 'application/json',
+      'content-Type': 'application/json'
     })
   }
 
   constructor(private httpClient:HttpClient) { }
 
   getUsers():Observable<User[]>{
+    console.log(this.apiUrl);
     return  this.httpClient.get<User[]>(this.apiUrl);
 
   }
 
-  postUser(user:User):Observable<User>{
+  postUser(user: User):Observable<User>{
     return this.httpClient.post<User>(this.apiUrl, user,this.httpOptions);
   }
 
   deleteUser(id: number):Observable<User>{
     return this.httpClient.delete<User>(`${this.apiUrl}/id/${id}`)
+  }
+
+  updateUser(id:string, user:User):Observable<User>{
+    return this.httpClient.put<User>(`${this.apiUrl}/id/${id}`, user, this.httpOptions)
+  }
+
+  getUser(id:string):Observable<User[]>{
+    return this.httpClient.get<User[]>(`${this.apiUrl}/id/${id}`)
   }
 }

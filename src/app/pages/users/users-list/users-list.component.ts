@@ -23,10 +23,15 @@ export class UsersListComponent implements OnInit {
     })
   }
 
-  deleteUser(id: number): void {
+  deleteUser(id: number ): void {
     this.userService.deleteUser(id).subscribe(response => {
       console.log('Usuario excluido')
-    })
+    }, (err) => {
+      console.log(err)
+    }, () => {
+      this.getUsers();
+    }
+    )
   }
 
 }
